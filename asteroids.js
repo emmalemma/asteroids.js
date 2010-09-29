@@ -265,6 +265,10 @@ function Asteroids() {
 	var maxParticles = isIE ? 10 : 40;
 	var maxBullets = isIE ? 10 : 20;
 	
+	var multiplayerURL = "http://localhost:9200"
+	var multiplayerLag = 500
+	
+	
 	/*var highscoreURL = "http://asteroids.glonk.se/highscores.html";
 	var closeURL = "http://asteroids.glonk.se/close.png";*/
 	
@@ -684,6 +688,28 @@ function Asteroids() {
 		this.restore();
 	};
 	
+	this.ctx.drawOthers = function() {
+		if (typeof OTHERS == "undefined" || OTHERS == null) return;
+		for (i in OTHERS) {
+			other = OTHERS[i];
+			this.save();
+			this.translate(parseFloat(other.x), parseFloat(other.y));
+			this.rotate(-parseFloat(other.t));
+			this.tracePoly(playerVerts);
+			this.stroke();
+			this.restore();
+		}
+	};
+	
+	this.ctx.drawOther = function(them) {
+		this.save();
+		this.translate(them.pos.x, them.pos.y);
+		this.rotate(-them.dir.angle());
+		this.tracePoly(playerVerts);
+		this.stroke();
+		this.restore();
+	};
+	
 	this.ctx.drawBullet = function(pos) {
 		this.beginPath();
 		this.arc(pos.x, pos.y, bulletRadius, 0, Math.PI*2, true);
@@ -721,6 +747,16 @@ function Asteroids() {
 		this.restore();
 	}
 	
+	var s = null;
+	this.shoutOut = function () {
+		s?document.body.removeChild(s):true;
+		s = document.createElement('script');
+		s.type='text/javascript';
+		document.body.appendChild(s);
+		s.src=multiplayerURL+"/asteroids?x="+that.pos.x+"&y="+that.pos.y+"&angle="+that.dir.angle();
+		void(0);
+	}
+	
 	/*
 		Game loop
 	*/
@@ -732,6 +768,10 @@ function Asteroids() {
 	var lastUpdate = new Date().getTime();
 	var hasKilled = false;
 	
+	var lastShout = new Date().getTime();
+	
+	
+	
 	this.update = function() {
 		var forceChange = false;
 		
@@ -741,6 +781,12 @@ function Asteroids() {
 		var nowTime = new Date().getTime();
 		var tDelta = (nowTime - lastUpdate) / 1000;
 		lastUpdate = nowTime;
+		
+		// 
+		if (nowTime - lastShout > multiplayerLag){
+			this.shoutOut();
+			lastShout = nowTime;
+		}
 		
 		// check enemy index timer and update that if needed
 		if ( nowTime - this.updated.enemies > timeBetweenEnemyUpdate && hasKilled ) {
@@ -926,6 +972,10 @@ function Asteroids() {
 			
 			// draw player
 			this.ctx.drawPlayer();
+			
+			
+			// draw others
+			this.ctx.drawOthers();
 			
 			// draw flames
 			if ( drawFlame )
