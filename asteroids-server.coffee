@@ -9,15 +9,21 @@ expire =(site)->
 			delete site[client]
 	setTimeout expire, 1000, site
 
+allTogetherNow = no
+
 server = http.createServer (req, res) =>
-	[url,x,y,t] = req.url.match /x=([0-9\-\.]+)&y=([0-9\-\.]+)&angle=([0-9\-\.]+)/
-	if not sites[req.headers.referer]?
-		sites[req.headers.referer] = {}
-		expire sites[req.headers.referer]
-	sites[req.headers.referer][req.client.remoteAddress+req.client.remotePort.toString()]={x:x,y:y,t:t,ts:(new Date().getTime())}
+	m = req.url.match /x=([0-9\-\.]+)&y=([0-9\-\.]+)&angle=([0-9\-\.]+)/
+	return unless m
+	[url,x,y,t] = m
+	
+	site = allTogetherNow or req.headers.referer
+	if not sites[site]?
+		sites[site] = {}
+		expire sites[site]
+	sites[site][req.client.remoteAddress+req.client.remotePort.toString()]={x:x,y:y,t:t,ts:(new Date().getTime())}
 
 	res.writeHead 200, {'Content-Type': 'text/javascript'}
-	r = JSON.stringify sites[req.headers.referer][client] for client of sites[req.headers.referer]
+	r = JSON.stringify sites[site][client] for client of sites[site]
 	parsed = "OTHERS = [#{r}];"
 	res.end parsed
 		
