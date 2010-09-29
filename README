@@ -18,6 +18,7 @@ To use:
 
 FORK ME! Features you could add:
 
+- some sort of client side animation-- interpolate (or extrapolate?) other players movements
 - give players the ability to set a nickname which is shown next to their ship
 - sync the destruction of the dom (in some fairly laissez-faire way, obviously)
 - make the dom gradually regrow (to keep up with everyone destroying it)
