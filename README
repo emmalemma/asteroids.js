@@ -22,6 +22,7 @@ FORK ME! Features you could add:
 - sync the destruction of the dom (in some fairly laissez-faire way, obviously)
 - make the dom gradually regrow (to keep up with everyone destroying it)
 server side...
+- I'm parsing the params in a single regex. No comment.
 - make the server better. seriously, it sucks
 - is there a better way to identify players?
 - is there a better way to store data than in memory?
