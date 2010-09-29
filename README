@@ -1,0 +1,37 @@
+This is a very, very basic multiplayer functionality hacked on top of erike's asteroids bookmarklet at http://erkie.github.com/ .
+
+Also included is a very, very small node.js server written in coffeescript (and compiled js, if needed) for the same service.
+
+At present the only "functionality" is the display of other players locations on the page. That's pretty lame, right? But I'm tired...
+
+To use:
+1. runserver: 	coffee asteroid-server.coffee
+		(or)	node asteroid-server.js
+		
+2. set the multiplayerURL in asteroids.js
+
+3. host asteroids.js somewhere
+
+4. point bookmarklet at your asteroids.js
+
+5. fun!
+
+FORK ME! Features you could add:
+
+- give players the ability to set a nickname which is shown next to their ship
+- sync the destruction of the dom (in some fairly laissez-faire way, obviously)
+- make the dom gradually regrow (to keep up with everyone destroying it)
+server side...
+- make the server better. seriously, it sucks
+- is there a better way to identify players?
+- is there a better way to store data than in memory?
+- is there a better way to write players' locations?
+- is there a better method for expiration?
+-
+the answer to all of these questions is yes. Let's do this!
+
+My bookmarklet, for reference:
+
+javascript:var%20s%20=%20document.createElement('script');s.type='text/javascript';document.body.appendChild(s);s.src='http://localhost/~adrian/asteroids.js';void(0);
+
+(credit to erike, again)
