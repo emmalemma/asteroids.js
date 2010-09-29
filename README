@@ -16,19 +16,7 @@ To use:
 
 5. fun!
 
-FORK ME! Features you could add:
-
-- give players the ability to set a nickname which is shown next to their ship
-- sync the destruction of the dom (in some fairly laissez-faire way, obviously)
-- make the dom gradually regrow (to keep up with everyone destroying it)
-server side...
-- make the server better. seriously, it sucks
-- is there a better way to identify players?
-- is there a better way to store data than in memory?
-- is there a better way to write players' locations?
-- is there a better method for expiration?
--
-the answer to all of these questions is yes. Let's do this!
+FORK ME! There's lots of ideas I had in TODO-- you must have ideas too. Go nuts!
 
 My bookmarklet, for reference:
 
